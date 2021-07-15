@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS + CSS Clock</title>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="clock_face">
+            <div class="hand hour_hand"></div>
+            <div class="hand min_hand"></div>
+            <div class="hand second_hand"></div>
+        </div>
+    </div>
+
+    <style>
+        html {
+            background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+            background-size: cover;
+            font-family: 'helvetica neue';
+            text-align: center;
+            font-size: 10px;
+        }
+
+        body {
+            margin: 0;
+            font-size: 2rem;
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            align-items: center;
+        }
+
+        .clock {
+            width: 30rem;
+            height: 30rem;
+            border: 20px solid white;
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem;
+            box-shadow:
+                0 0 0 4px rgba(0, 0, 0, 0.1),
+                inset 0 0 0 3px #EFEFEF,
+                inset 0 0 10px black,
+                0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .clock_face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: translateY(-3px);
+            /* account for the height of the clock hands */
+        }
+
+        .hand {
+            width: 50%;
+            height: 6px;
+            background: black;
+            position: absolute;
+            top: 50%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: all 0.05s;
+            transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+        }
+
+    </style>
+    <script>
+        const secondHand = document.querySelector('.second_hand');
+        const minHand = document.querySelector('.min_hand');
+        const hourHand = document.querySelector('.hour_hand');
+
+        // When 360 deg -> 0 deg, the transition animation will break
+        // So this helper function will turn off the transition when it goes from 360 + offset to 0ffset degree
+        function fixTransition(elem, deg, offset) {
+            if (deg === offset) {
+                elem.style.transition = "none";
+            } else if (elem.style.transition) {
+                elem.style.transition = "";
+            }
+        }
+
+        function setDate() {
+            const now = new Date();
+            const hours = now.getHours();
+            const mins = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const offset = 90;
+
+            var hrDeg = (hours / 24) * 360 + offset;
+            var minDeg = (mins / 60) * 360 + offset;
+            var secDeg = (seconds / 60) * 360 + offset;
+
+            if (hrDeg == offset) {
+                hrDeg = hrDeg + 360;
+                hourHand.style.transform = `rotate(${hrDeg}deg)`;
+                hrDeg = hrDeg - 360;
+                fixTransition(hourHand, hrDeg, offset);
+                hourHand.style.transform = `rotate(${hrDeg}deg)`;
+            } else {
+                fixTransition(hourHand, hrDeg, offset);
+                hourHand.style.transform = `rotate(${hrDeg}deg)`;
+            }
+            if (minDeg == offset) {
+                minDeg = minDeg + 360;
+                minHand.style.transform = `rotate(${minDeg}deg)`;
+                minDeg = minDeg - 360;
+                fixTransition(minHand, minDeg, offset);
+                minHand.style.transform = `rotate(${minDeg}deg)`;
+            } else {
+                fixTransition(minHand, minDeg, offset);
+                minHand.style.transform = `rotate(${minDeg}deg)`;
+            }
+            if (secDeg == offset) {
+                secDeg = secDeg + 360;
+                secondHand.style.transform = `rotate(${secDeg}deg)`;
+                secDeg = secDeg - 360;
+                fixTransition(secondHand, secDeg, offset);
+                secondHand.style.transform = `rotate(${secDeg}deg)`;
+            } else {
+                fixTransition(secondHand, secDeg, offset);
+                secondHand.style.transform = `rotate(${secDeg}deg)`;
+            }
+        }
+        setInterval(setDate, 1000);
+    </script>
+
+</body>
+
+</html>
