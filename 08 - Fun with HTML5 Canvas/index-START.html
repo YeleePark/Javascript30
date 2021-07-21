@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+// 캔버스 select
+const canvas = document.getElementById('draw'); 
+const ctx = canvas.getContext('2d'); 
+
+// canvas사이즈를 document 크기만큼 지정
+canvas.width = window.innerWidth; 
+canvas.height = window.innerHeight;
+
+// 도형의 stroke 컬러
+ctx.strokeStyle = '#BADA55';
+// stroke의 꺾이는 부분
+ctx.lineJoin = 'round'; // option : bevel, miter
+// stroke의 끝 부분
+ctx.lineCap = 'round'; // option : square, butt
+// stroke의 굵기
+ctx.lineWidth = 10;
+
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+let hue = 0;
+let lineDirection = true;
+
+function click(e){
+  isDrawing = true;
+
+  //시작점
+  // lastX = e.offsetX
+  // lastY = e.offsetY ㄹ
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+function draw(e){
+  // 마우스 땠을 때나, 캔버스를 벗어났을 때 return
+  if(!isDrawing)return;
+
+  // 선 그리기 시작알림
+  ctx.beginPath();
+  // start from (시작점)
+  ctx.moveTo(lastX, lastY);
+  // go to (마우스가 있는 위치의 x,y 절대값 까지);
+  ctx.lineTo(e.offsetX, e.offsetY);
+  // draw!
+  ctx.stroke();
+  // 0,0 이였던 값이 마지막으로 그려진 마우스의 x,y 위치 절대값으로 변경
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+
+  // hue 값 변경
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+  hue++;
+
+  if(ctx.lineWidth >= 50 || ctx.lineWidth <= 1){
+    lineDirection = !lineDirection; // true 일땐 false로, false일 땐 true로
+  }
+
+  if(lineDirection){
+    ctx.lineWidth++;
+  }else{
+    ctx.lineWidth--;
+  }
+}
+
+
+document.addEventListener('mousedown', click) // 캔버스에 마우스 클릭했을 때
+document.addEventListener('mousemove', draw) // 캔버스에서 마우스 움직일 때 = 드래그 할때
+document.addEventListener('mouseup', ()=> isDrawing = false) // 캔버스에서 마우스 땠을 때
+document.addEventListener('mouseout', ()=> isDrawing = false) // 캔버스에서 마우스가 벗어났을 때
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
