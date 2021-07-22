@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>Console Tricks!</title>
+    </head>
+    
+    <body>
+        <p onClick="makeGreen()">xBREAKxDOWN</p>
+        
+        <script>
+        
+        const dogs = [{ name: 'Snickers', age: 2}, {name:'hugo', age:8}];
+            
+            function makeGreen() {
+                const p = document.querySelector('p');
+                p.style.color = '#BADA55';
+                p.style.fontSize = '50px'
+            }
+            
+            // clearing
+            console.log('foo');
+            console.log('bar');
+            console.clear();
+                        
+            // Regular
+            console.log('Regular');
+            
+            // Interpolated
+            let text = "NEW";
+            console.log('[OLD]Hello, I am %s string!', "OLD");
+            console.log(`[${text}]Hello, I am ${text} string!`);
+            
+            // Sytled
+            let myStyle = `font-size:20px; background:red; text-shadow: 5px 5px 0 blue`;
+            console.log('%cLet me show you the style', myStyle);
+            
+            // worning!
+            console.warn('warning!');
+            
+            // Error :|
+            console.error('error!');
+            
+            // Info
+            console.info('information');
+            
+            // Testing
+            console.assert(1 === 1, '1 is not 1');
+            console.assert(1 === 2, '1 is not 2');
+            
+            const p = document.querySelector('p');
+            console.assert(p.classList.contains('haha'), 'no class named "haha"'); 
+            
+            // Viewing DOM Elements
+            console.log(p);
+            console.dir(p);
+            
+            // Grouping together
+            dogs.forEach(dog => {
+                console.log(`This is ${dog.name}`);
+                console.log(`${dog.name} is ${dog.age} years old`);
+                console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+            })            
+            
+            dogs.forEach(dog => {
+                console.groupCollapsed(`${dog.name}`);
+                console.log(`This is ${dog.name}`);
+                console.log(`${dog.name} is ${dog.age} years old`);
+                console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+                console.groupEnd(`${dog.name}`);
+            })
+            
+            // counting
+            console.count("jhs");
+            console.count("boy");
+            console.count("jhs");
+            console.count("girl");
+            console.count("boy");
+            console.count("jhs");
+            
+            // timing
+            console.time('console.log()');
+            console.log('test1');
+            console.log('test2');
+            console.log('test3');
+            console.timeEnd('console.log()');
+
+            // table
+            console.table(dogs);
+            
+        </script>
+        
+        
+    </body>
+</html>
