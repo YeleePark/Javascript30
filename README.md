@@ -13,3 +13,4 @@
 |7/21| 08| HTML5 Canvas|
 |7/22| 09| console 로그 찍는 방법|
 |7/23| 10| shift키 누르면 멀티 셀렉트|
+|7/24| 11| Video player|
