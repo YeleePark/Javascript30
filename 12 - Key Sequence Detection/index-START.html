@@ -14,7 +14,6 @@
 
     document.addEventListener('keydown', (e) => {
       arr.push(e.key);
-      // secret코드의 길이
       arr.splice(secret.length - 1, arr.length - secret.length);
       console.log(arr);
       if (arr.join('').includes(secret)) {
