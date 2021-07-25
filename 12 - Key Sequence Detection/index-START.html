@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+
+<body>
+  <script>
+    const arr = [];
+    const secret = 'yelee';
+
+    document.addEventListener('keydown', (e) => {
+      arr.push(e.key);
+      // secret코드의 길이
+      arr.splice(secret.length - 1, arr.length - secret.length);
+      console.log(arr);
+      if (arr.join('').includes(secret)) {
+        cornify_add();
+      }
+    })
+  </script>
+</body>
+
+</html>
